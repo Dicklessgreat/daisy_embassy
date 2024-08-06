@@ -16,7 +16,7 @@ grounded = "0.2.0"
 wm8731 = "0.1.0"
 stm32-fmc = "0.3.0"
 
-[dev_dependencies]
+[dev-dependencies]
 cortex-m = { version = "0.7.6", features = ["inline-asm", "critical-section-single-core"] }
 cortex-m-rt = { version = "0.7.0", features = ["device"] }
 defmt = "0.3.8"
@@ -25,6 +25,13 @@ panic-probe = { version = "0.3.2", features = ["print-defmt"] }
 embassy-executor = { version = "0.5.0", features = ["task-arena-size-32768", "arch-cortex-m", "executor-thread", "executor-interrupt", "defmt", "integrated-timers"] }
 embassy-futures = "0.1.1"
 embassy-usb = "0.2.0"
+embassy-embedded-hal = { version = "0.1.0", features = ["defmt"] }
+embedded-hal-async = { version = "1.0.0" }
+embedded-io-async = "0.6.1"
+embedded-fatfs = { version = "0.1.0", default-features = false }
+sdspi = { version = "0.1.0" }
+block-device-adapters = { version = "0.1.0"}
+aligned = "0.4.2"
 
 [patch.crates-io]
 embassy-stm32 = { git = "https://github.com/embassy-rs/embassy", rev = "b88dc137e766d89eca5472bfa6f3bb78cfd1f7e0" }
@@ -33,6 +40,11 @@ embassy-sync = { git = "https://github.com/embassy-rs/embassy", rev = "b88dc137e
 embassy-executor = { git = "https://github.com/embassy-rs/embassy", rev = "b88dc137e766d89eca5472bfa6f3bb78cfd1f7e0" }
 embassy-futures = { git = "https://github.com/embassy-rs/embassy", rev = "b88dc137e766d89eca5472bfa6f3bb78cfd1f7e0" }
 embassy-usb = { git = "https://github.com/embassy-rs/embassy", rev = "b88dc137e766d89eca5472bfa6f3bb78cfd1f7e0" }
+embassy-embedded-hal = { git = "https://github.com/embassy-rs/embassy", rev = "b88dc137e766d89eca5472bfa6f3bb78cfd1f7e0" }
+
+embedded-fatfs = { git = "https://github.com/Dicklessgreat/embedded-fatfs.git", branch = "stm32h7_DMA" }
+sdspi = { git = "https://github.com/Dicklessgreat/embedded-fatfs.git", branch = "stm32h7_DMA" }
+block-device-adapters = { git = "https://github.com/Dicklessgreat/embedded-fatfs.git", branch = "stm32h7_DMA" }
 
 [profile.release]
 codegen-units = 1
