@@ -126,6 +126,6 @@ async fn main(_spawner: Spawner) {
 
     interrupt::SAI1.set_priority(Priority::P6);
     let spawner = AUDIO_EXECUTOR.start(interrupt::SAI1);
-    defmt::unwrap!(spawner.spawn(run_audio(interface, sdram)));
+    spawner.spawn(defmt::unwrap!(run_audio(interface, sdram)));
     record_fut.await;
 }

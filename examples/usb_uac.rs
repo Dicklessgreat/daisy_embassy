@@ -374,12 +374,16 @@ async fn main(spawner: Spawner) {
     }
 
     // Launch USB audio tasks.
-    defmt::unwrap!(spawner.spawn(usb_control_task(control_monitor)));
-    defmt::unwrap!(spawner.spawn(usb_streaming_task(stream, sender)));
-    defmt::unwrap!(spawner.spawn(usb_feedback_task(feedback)));
-    defmt::unwrap!(spawner.spawn(usb_task(usb_device)));
-    defmt::unwrap!(spawner.spawn(audio_receiver_task(interface, receiver, board.user_led)));
-    defmt::unwrap!(spawner.spawn(background_task()));
+    spawner.spawn(defmt::unwrap!(usb_control_task(control_monitor)));
+    spawner.spawn(defmt::unwrap!(usb_streaming_task(stream, sender)));
+    spawner.spawn(defmt::unwrap!(usb_feedback_task(feedback)));
+    spawner.spawn(defmt::unwrap!(usb_task(usb_device)));
+    spawner.spawn(defmt::unwrap!(audio_receiver_task(
+        interface,
+        receiver,
+        board.user_led
+    )));
+    spawner.spawn(defmt::unwrap!(background_task()));
 }
 
 #[embassy_executor::task]

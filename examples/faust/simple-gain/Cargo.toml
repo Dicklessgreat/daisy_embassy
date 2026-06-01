@@ -22,15 +22,14 @@ strum = { version = "*", default-features = false, features = [
   "derive",
 ], git = "https://github.com/Peternator7/strum" }
 
-embassy-executor = { version = "0.7.0", features = [
-  "arch-cortex-m",
+embassy-executor = { version = "0.10.0", features = [
+  "platform-cortex-m",
   "defmt",
   "executor-interrupt",
   "executor-thread",
-  "task-arena-size-32768",
 ] }
-embassy-sync = { version = "0.7.2", features = ["defmt"] }
-embassy-time = { version = "0.5.0" }
+embassy-sync = { version = "0.8.0", features = ["defmt"] }
+embassy-time = { version = "0.5.1" }
 panic-probe = { version = "1.0.0", features = ["print-defmt"] }
 
 defmt-rtt = "1.0.0"
@@ -41,13 +40,6 @@ faust-build    = { git = "https://codeberg.org/crop/blech.git", rev = "1493f2f5d
 faust-ui-build = { git = "https://codeberg.org/crop/blech.git", rev = "1493f2f5da93ef0cbb2a05baf4bf281ad97674f6" }
 quote          = "*"
 
-
-[patch.crates-io]
-embassy-stm32 = { git = "https://github.com/embassy-rs/embassy.git", rev = "70aa65871e26f087e0baaf8e737371a4d5fd6d20" }
-embassy-time = { git = "https://github.com/embassy-rs/embassy.git", rev = "70aa65871e26f087e0baaf8e737371a4d5fd6d20" }
-embassy-sync = { git = "https://github.com/embassy-rs/embassy.git", rev = "70aa65871e26f087e0baaf8e737371a4d5fd6d20" }
-embassy-futures = { git = "https://github.com/embassy-rs/embassy.git", rev = "70aa65871e26f087e0baaf8e737371a4d5fd6d20" }
-embassy-usb = { git = "https://github.com/embassy-rs/embassy.git", rev = "70aa65871e26f087e0baaf8e737371a4d5fd6d20" }
 
 [profile.release]
 codegen-units = 1

@@ -33,7 +33,7 @@ async fn main(spawner: Spawner) {
     let board: DaisyBoard<'_> = new_daisy_board!(p);
 
     let led = board.user_led;
-    spawner.spawn(blink(led)).unwrap();
+    spawner.spawn(blink(led).unwrap());
 
     let interface = board
         .audio_peripherals

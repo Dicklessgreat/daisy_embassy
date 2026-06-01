@@ -65,15 +65,10 @@ async fn main(spawner: Spawner) {
     let board: DaisyBoard<'_> = new_daisy_board!(p);
 
     let led = board.user_led;
-    spawner.spawn(blink(led)).unwrap();
-    spawner
-        .spawn(handle_gain_button(ExtiInput::new(
-            board.pins.d16,
-            p.EXTI3,
-            Pull::Up,
-            Irqs,
-        )))
-        .unwrap();
+    spawner.spawn(blink(led).unwrap());
+    spawner.spawn(
+        handle_gain_button(ExtiInput::new(board.pins.d16, p.EXTI3, Pull::Up, Irqs)).unwrap(),
+    );
 
     let interface = board
         .audio_peripherals

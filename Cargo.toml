@@ -13,8 +13,8 @@ categories = ["embedded"]
 
 [dependencies]
 embassy-stm32 = { version = "0.6.0", features = ["defmt", "stm32h750ib", "time-driver-tim5", "exti", "memory-x", "unstable-pac", "chrono"] }
-embassy-time = { version = "0.5.0", features = ["defmt", "defmt-timestamp-uptime", "tick-hz-32_768", "generic-queue-8"] }
-embassy-sync = { version = "0.7.2", features = ["defmt"] }
+embassy-time = { version = "0.5.1", features = ["defmt", "defmt-timestamp-uptime", "tick-hz-32_768", "generic-queue-8"] }
+embassy-sync = { version = "0.8.0", features = ["defmt"] }
 cortex-m = "0.7.7"
 static_cell = "2.1.1"
 defmt = "1.0.1"
@@ -27,7 +27,7 @@ cortex-m = { version = "0.7.6", features = ["inline-asm", "critical-section-sing
 cortex-m-rt = { version = "0.7.0", features = ["device"] }
 defmt-rtt = "1.0.0"
 panic-probe = { version = "1.0.0", features = ["print-defmt"] }
-embassy-executor = { version = "0.7.0", features = ["task-arena-size-32768", "arch-cortex-m", "executor-thread", "executor-interrupt", "defmt"] }
+embassy-executor = { version = "0.10.0", features = ["platform-cortex-m", "executor-thread", "executor-interrupt", "defmt"] }
 embassy-futures = "0.1.2"
 embassy-usb = {version = "0.6.0", features = ["defmt"]}
 critical-section = "1.2.0"
@@ -40,14 +40,6 @@ seed_1_1 = []
 seed_1_2 = []
 patch_sm = []
 # defmt = []
-
-[patch.crates-io]
-embassy-stm32 = { git = "https://github.com/embassy-rs/embassy.git", rev = "2a1ea6766d00c867c717290d0bb31a8e3f237dca" }
-embassy-time = { git = "https://github.com/embassy-rs/embassy.git", rev = "2a1ea6766d00c867c717290d0bb31a8e3f237dca" }
-embassy-sync = { git = "https://github.com/embassy-rs/embassy.git", rev = "2a1ea6766d00c867c717290d0bb31a8e3f237dca" }
-# embassy-executor = { git = "https://github.com/embassy-rs/embassy.git", rev = "2a1ea6766d00c867c717290d0bb31a8e3f237dca" }
-embassy-futures = { git = "https://github.com/embassy-rs/embassy.git", rev = "2a1ea6766d00c867c717290d0bb31a8e3f237dca" }
-embassy-usb = { git = "https://github.com/embassy-rs/embassy.git", rev = "2a1ea6766d00c867c717290d0bb31a8e3f237dca" }
 
 [profile.release]
 codegen-units = 1
