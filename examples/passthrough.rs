@@ -1,7 +1,8 @@
 // Audio passthrough example for daisy seed
-// Currently support for WM8731 codec and PCM3060 codec
+// Currently supports the WM8731, PCM3060, and TAC5242 codecs
 // For WM8731 use feature "seed_1_1"
 // For PCM3060 use feature "seed_1_2"
+// For TAC5242 use feature "seed3"
 //
 // Just like they did in https://github.com/zlosynth/daisy
 #![no_std]

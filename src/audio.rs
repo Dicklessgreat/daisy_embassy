@@ -59,8 +59,9 @@ impl<'a> AudioPeripherals<'a> {
     ///   You can use `AudioConfig::default()` or `Default::default()` for default settings.
     ///
     /// # Notes
-    /// - This method is async because `seed_1_1` requires I2C communication with the WM8731 codec.
-    /// - The board revision is selected via Cargo features (`seed_1_1`, `seed_1_2`).
+    /// - This method is async because some codecs require configuration or
+    ///   power-settling delays before their audio clocks start.
+    /// - The board revision is selected via Cargo features.
     pub async fn prepare_interface(self, audio_config: AudioConfig) -> Interface<'a, Idle> {
         let tx_buffer: &mut [u32] = unsafe {
             TX_BUFFER.initialize_all_copied(0);

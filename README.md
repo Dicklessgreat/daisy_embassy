@@ -64,6 +64,7 @@ See the `examples/` directory for more demos, such as `blinky.rs` or `triangle_w
 | Daisy Seed 1.1      | Rev5     | WM8731  | ✅ Supported  | 0.3.0(unreleased)  |
 | Daisy Seed 1.2      | Rev7     | PCM3060 | ✅ Supported  | 0.2.2  |
 | Daisy Seed (AK4556) | Rev4     | AK4556  | ✅ Supported  | 0.3.0(unreleased)  |
+| Daisy Seed3         | Seed3    | TAC5242 | 🚧 Development | 48 kHz stereo input and output physically verified |
 | Daisy Patch SM      | -        | PCM3060 | ✅ Supported  | 0.3.0(unreleased)  |
 
 [Test reports and confirmations for `0.3.0(unreleased)` on Daisy Seed 1.2 are very welcome.](https://github.com/daisy-embassy/daisy-embassy/issues/59)
@@ -99,6 +100,7 @@ See the `examples/` directory for more demos, such as `blinky.rs` or `triangle_w
    - Daisy Seed (AK4556): Use `--features=seed`.
    - Daisy Seed Rev5 (WM8731): `--features=seed_1_1`.
    - Daisy Seed Rev7 (PCM3060): Use `--features=seed_1_2`.
+   - Daisy Seed3 (TAC5242): Use `--features=seed3`.
    - Daisy Patch SM: Use `--features=patch_sm`.
 
 3. **Run an Example**:
@@ -112,6 +114,9 @@ See the `examples/` directory for more demos, such as `blinky.rs` or `triangle_w
 
    # Rev7(PCM3060): Triangle wave example
    cargo run --example triangle_wave_tx --features=seed_1_2 --release
+
+   # Seed3(TAC5242): Passthrough example
+   cargo run --example passthrough --features=seed3 --release
 
    # Path SM: looper example
    cargo run --example looper --features=patch_sm --release
@@ -137,6 +142,7 @@ This crate uses feature flags to gate board-specific code. When developing in an
 - Daisy Seed (AK4556): `seed`
 - Daisy Seed Rev5 (WM8731): `seed_1_1`
 - Daisy Seed Rev7 (PCM3060): `seed_1_2`
+- Daisy Seed3 (TAC5242): `seed3`
 - Daisy Patch SM: `patch_sm`
 
 ---

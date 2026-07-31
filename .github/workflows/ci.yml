@@ -36,4 +36,6 @@ jobs:
       - run: cargo clippy --features seed -- --deny=warnings
       - run: cargo clippy --features seed_1_1 -- --deny=warnings
       - run: cargo clippy --features seed_1_2 -- --deny=warnings
+      - run: cargo clippy --features seed3 -- --deny=warnings
+      - run: cargo build --release --examples --features seed3
       - run: cargo clippy --features patch_sm -- --deny=warnings

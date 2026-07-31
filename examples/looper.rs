@@ -107,7 +107,12 @@ async fn main(_spawner: Spawner) {
 
     // Feature flags are needed because of the different pin mappings.
     // The same underlying MCU pin is used in both cases
-    #[cfg(any(feature = "seed", feature = "seed_1_1", feature = "seed_1_2"))]
+    #[cfg(any(
+        feature = "seed",
+        feature = "seed_1_1",
+        feature = "seed_1_2",
+        feature = "seed3"
+    ))]
     let pin = board.pins.d16;
 
     #[cfg(feature = "patch_sm")]

@@ -1,7 +1,17 @@
-#[cfg(any(feature = "seed", feature = "seed_1_1", feature = "seed_1_2"))]
+#[cfg(any(
+    feature = "seed",
+    feature = "seed_1_1",
+    feature = "seed_1_2",
+    feature = "seed3"
+))]
 mod pins_seed;
 
-#[cfg(any(feature = "seed", feature = "seed_1_1", feature = "seed_1_2"))]
+#[cfg(any(
+    feature = "seed",
+    feature = "seed_1_1",
+    feature = "seed_1_2",
+    feature = "seed3"
+))]
 pub use pins_seed::*;
 
 #[cfg(feature = "patch_sm")]

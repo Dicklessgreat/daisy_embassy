@@ -26,6 +26,7 @@ This is a small, collaborative project maintained by a few developers. We aim to
   cargo clippy --features seed -- --deny=warnings
   cargo clippy --features seed_1_1 -- --deny=warnings
   cargo clippy --features seed_1_2 -- --deny=warnings
+  cargo clippy --features seed3 -- --deny=warnings
   cargo clippy --features patch_sm -- --deny=warnings
 ```
 

@@ -3,25 +3,56 @@
 // use same configuration concept as https://github.com/zlosynth/daisy
 #[cfg(all(
     feature = "seed_1_2",
-    any(feature = "seed_1_1", feature = "seed", feature = "patch_sm")
+    any(
+        feature = "seed_1_1",
+        feature = "seed",
+        feature = "seed3",
+        feature = "patch_sm"
+    )
 ))]
 compile_error!("only a single target board must be selected");
 
 #[cfg(all(
     feature = "seed_1_1",
-    any(feature = "seed_1_2", feature = "seed", feature = "patch_sm")
+    any(
+        feature = "seed_1_2",
+        feature = "seed",
+        feature = "seed3",
+        feature = "patch_sm"
+    )
 ))]
 compile_error!("only a single target board must be selected");
 
 #[cfg(all(
     feature = "seed",
-    any(feature = "seed_1_2", feature = "seed_1_1", feature = "patch_sm")
+    any(
+        feature = "seed_1_2",
+        feature = "seed_1_1",
+        feature = "seed3",
+        feature = "patch_sm"
+    )
 ))]
 compile_error!("only a single target board must be selected");
 
 #[cfg(all(
     feature = "patch_sm",
-    any(feature = "seed_1_2", feature = "seed_1_1", feature = "seed")
+    any(
+        feature = "seed_1_2",
+        feature = "seed_1_1",
+        feature = "seed",
+        feature = "seed3"
+    )
+))]
+compile_error!("only a single target board must be selected");
+
+#[cfg(all(
+    feature = "seed3",
+    any(
+        feature = "seed_1_2",
+        feature = "seed_1_1",
+        feature = "seed",
+        feature = "patch_sm"
+    )
 ))]
 compile_error!("only a single target board must be selected");
 
@@ -29,10 +60,11 @@ compile_error!("only a single target board must be selected");
     feature = "seed_1_2",
     feature = "seed_1_1",
     feature = "seed",
+    feature = "seed3",
     feature = "patch_sm"
 )))]
 compile_error!(
-    "target board must be selected using a feature: \"seed_1_2\" | \"seed_1_1\" | \"seed\" | \"patch_sm\""
+    "target board must be selected using a feature: \"seed_1_2\" | \"seed_1_1\" | \"seed\" | \"seed3\" | \"patch_sm\""
 );
 
 pub mod audio;
@@ -141,6 +173,20 @@ macro_rules! codec_pins {
     };
 }
 
+#[cfg(feature = "seed3")]
+#[macro_export]
+macro_rules! codec_pins {
+    ($p:ident) => {
+        daisy_embassy::CodecPins {
+            MCLK_A: $p.PE2,
+            SCK_A: $p.PE5,
+            FS_A: $p.PE4,
+            SD_A: $p.PE6,
+            SD_B: $p.PE3,
+        }
+    };
+}
+
 #[cfg(feature = "patch_sm")]
 #[macro_export]
 macro_rules! codec_pins {
@@ -158,7 +204,12 @@ macro_rules! codec_pins {
     };
 }
 
-#[cfg(any(feature = "seed", feature = "seed_1_1", feature = "seed_1_2"))]
+#[cfg(any(
+    feature = "seed",
+    feature = "seed_1_1",
+    feature = "seed_1_2",
+    feature = "seed3"
+))]
 #[macro_export]
 macro_rules! daisy_pins {
     ($p:ident) => {

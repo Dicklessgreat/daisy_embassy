@@ -61,7 +61,12 @@ async fn main(_spawner: Spawner) {
 
     // Feature flags are needed because of the different pin mappings.
     // change_freq maps to the same underlying MCU pin in both cases
-    #[cfg(any(feature = "seed", feature = "seed_1_1", feature = "seed_1_2"))]
+    #[cfg(any(
+        feature = "seed",
+        feature = "seed_1_1",
+        feature = "seed_1_2",
+        feature = "seed3"
+    ))]
     {
         mute = Input::new(board.pins.d15, Pull::Up);
         change_freq = ExtiInput::new(board.pins.d16, p.EXTI3, Pull::Up, Irqs);
