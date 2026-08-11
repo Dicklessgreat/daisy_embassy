@@ -150,6 +150,7 @@ This crate uses feature flags to gate board-specific code. When developing in an
 ## Sample Projects
 
 [daisy-patch-embassy](https://github.com/daisy-embassy/daisy-patch-embassy)
+[daisy-pod-embassy](https://github.com/daisy-embassy/daisy-pod-embassy)
 
 ---
 
