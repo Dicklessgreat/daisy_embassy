@@ -3,7 +3,10 @@
 
 use core::sync::atomic::{AtomicU8, Ordering};
 
-use daisy_embassy::{audio::HALF_DMA_BUFFER_LENGTH, hal, new_daisy_board};
+use daisy_embassy::{
+    audio::{HALF_DMA_BUFFER_LENGTH, f32_to_sample},
+    hal, new_daisy_board,
+};
 use defmt::{debug, unwrap};
 use embassy_executor::Spawner;
 use embassy_futures::join::join;
@@ -103,7 +106,7 @@ async fn main(_spawner: Spawner) {
                 .start_callback(|_input, output| {
                     let period = WaveFrequency::from(wave_freq.load(Ordering::SeqCst)).as_period();
                     for chunk in buf.chunks_mut(2) {
-                        let smp = f32_to_u24(make_triangle_wave(smp_pos % period, period));
+                        let smp = f32_to_sample(make_triangle_wave(smp_pos % period, period));
                         if mute.is_high() {
                             chunk[0] = smp;
                             chunk[1] = smp;
@@ -131,13 +134,4 @@ fn make_triangle_wave(pos: u32, period_smp: u32) -> f32 {
         let pos = pos - period_smp / 2;
         pos as f32 * (-4.0) / period_smp as f32 + 1.0
     }
-}
-
-/// convert audio data from f32 to u24
-#[inline(always)]
-fn f32_to_u24(x: f32) -> u32 {
-    //return (int16_t) __SSAT((int32_t) (x * 32767.f), 16);
-    let x = x * 8_388_607.0;
-    let x = x.clamp(-8_388_608.0, 8_388_607.0);
-    (x as i32) as u32
 }

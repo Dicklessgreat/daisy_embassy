@@ -14,6 +14,12 @@ use hal::peripherals::*;
 /// reinitialization deterministic.
 const STARTUP_DELAY_MS: u64 = 2;
 
+/// Number of significant bits in each 32-bit SAI word.
+///
+/// The TAC5242 transport is configured for full 32-bit samples
+/// (`sai::DataSize::Data32` below), so samples must fill the whole word.
+pub const SAMPLE_WIDTH_BITS: u32 = 32;
+
 /// Audio codec transport for the hardware-strapped TAC5242 on Seed3.
 pub struct Codec<'a> {
     sai_tx: sai::Sai<'a, peripherals::SAI1, u32>,

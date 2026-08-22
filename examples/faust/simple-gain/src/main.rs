@@ -7,10 +7,10 @@
 
 #![no_std]
 #![no_main]
-use core::{array::from_fn, num::Wrapping};
+use core::array::from_fn;
 use daisy_embassy::{
     DaisyBoard,
-    audio::HALF_DMA_BUFFER_LENGTH,
+    audio::{HALF_DMA_BUFFER_LENGTH, f32_to_sample, sample_to_f32},
     hal::{self, bind_interrupts, exti::ExtiInput, gpio::Pull, interrupt, mode::Async},
     led::UserLed,
     new_daisy_board,
@@ -89,7 +89,7 @@ async fn main(spawner: Spawner) {
 }
 
 fn process_audio_faust(dsp: &mut dsp::LpVol, input: &[u32], output: &mut [u32]) {
-    let ibuf: [[f32; 64]; dsp::FAUST_INPUTS] = from_fn(|_| from_fn(|i| u24_to_f32(input[i])));
+    let ibuf: [[f32; 64]; dsp::FAUST_INPUTS] = from_fn(|_| from_fn(|i| sample_to_f32(input[i])));
     let mut obuf: [[f32; 64]; dsp::FAUST_OUTPUTS] = from_fn(|_| [0.0_f32; HALF_DMA_BUFFER_LENGTH]);
 
     // if a new value is recieved, set it.
@@ -101,22 +101,6 @@ fn process_audio_faust(dsp: &mut dsp::LpVol, input: &[u32], output: &mut [u32]) 
     dsp.compute(HALF_DMA_BUFFER_LENGTH, &ibuf, &mut obuf);
 
     for (i, f32_value) in obuf[0].iter().enumerate() {
-        output[i] = f32_to_u24(*f32_value);
+        output[i] = f32_to_sample(*f32_value);
     }
-}
-
-// see https://github.com/zlosynth/daisy
-// Convert audio PCM data from u24 to f32,
-#[inline(always)]
-fn u24_to_f32(y: u32) -> f32 {
-    let y = (Wrapping(y) + Wrapping(0x0080_0000)).0 & 0x00FF_FFFF; // convert to i32
-    (y as f32 / 8_388_608.0) - 1.0 // (2^24) / 2
-}
-
-// Convert audio data from f32 to u24 PCM
-#[inline(always)]
-fn f32_to_u24(x: f32) -> u32 {
-    let x = x * 8_388_607.0;
-    let x = x.clamp(-8_388_608.0, 8_388_607.0);
-    (x as i32) as u32
 }

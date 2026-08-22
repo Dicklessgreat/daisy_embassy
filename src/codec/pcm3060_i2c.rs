@@ -24,6 +24,12 @@ const ADC_PSV_MASK: u8 = 0x20;
 const DAC_PSV_MASK: u8 = 0x10;
 const FMT_MASK: u8 = 0x1;
 
+/// Number of significant bits in each 32-bit SAI word.
+///
+/// The PCM3060 transport is configured for 24-bit samples
+/// (`sai::DataSize::Data24` below), so only the low 24 bits of each word are used.
+pub const SAMPLE_WIDTH_BITS: u32 = 24;
+
 pub struct Codec<'a> {
     i2c: hal::i2c::I2c<'a, hal::mode::Blocking, hal::i2c::Master>,
     sai_tx: sai::Sai<'a, peripherals::SAI1, u32>,

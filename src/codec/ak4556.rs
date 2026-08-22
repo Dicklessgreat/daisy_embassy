@@ -15,6 +15,12 @@ use hal::sai::{BitOrder, SyncInput};
 
 use hal::sai::{self, ClockStrobe, DataSize, FrameSyncPolarity, Mode, StereoMono, TxRx};
 
+/// Number of significant bits in each 32-bit SAI word.
+///
+/// The AK4556 transport is configured for 24-bit samples
+/// (`DataSize::Data24` below), so only the low 24 bits of each word are used.
+pub const SAMPLE_WIDTH_BITS: u32 = 24;
+
 pub struct Codec<'a> {
     reset: Output<'a>,
     sai_tx: sai::Sai<'a, peripherals::SAI1, u32>,

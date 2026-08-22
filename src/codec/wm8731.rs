@@ -15,6 +15,12 @@ use crate::audio::{AudioConfig, AudioIrqs, AudioPeripherals, Fs};
 
 const I2C_FS: Hertz = Hertz(100_000);
 
+/// Number of significant bits in each 32-bit SAI word.
+///
+/// The WM8731 transport is configured for 24-bit samples
+/// (`DataSize::Data24` below), so only the low 24 bits of each word are used.
+pub const SAMPLE_WIDTH_BITS: u32 = 24;
+
 /// A simple HAL for the Cirrus Logic/ Wolfson WM8731 audio codec
 pub struct Codec<'a> {
     i2c: hal::i2c::I2c<'a, hal::mode::Blocking, hal::i2c::Master>,

@@ -14,6 +14,31 @@ pub const BLOCK_LENGTH: usize = 32; // 32 samples
 pub const HALF_DMA_BUFFER_LENGTH: usize = BLOCK_LENGTH * 2; //  2 channels
 pub const DMA_BUFFER_LENGTH: usize = HALF_DMA_BUFFER_LENGTH * 2; //  2 half-blocks
 
+/// Number of significant bits in each 32-bit SAI word for the selected board's
+/// codec: 24 on Seed/Seed 1.1/Seed 1.2/Patch SM, 32 on Seed3 (TAC5242).
+pub use crate::codec::SAMPLE_WIDTH_BITS;
+
+/// Amplitude of a full-scale sample: `2^(SAMPLE_WIDTH_BITS - 1)`.
+const SAMPLE_SCALE: f32 = (1u32 << (SAMPLE_WIDTH_BITS - 1)) as f32;
+
+/// Convert an audio sample from f32 (`-1.0..1.0`) to the wire format expected
+/// by the selected board's codec.
+#[inline(always)]
+pub fn f32_to_sample(x: f32) -> u32 {
+    let x = x * SAMPLE_SCALE;
+    let x = x.clamp(-SAMPLE_SCALE, SAMPLE_SCALE - 1.0);
+    (x as i32) as u32
+}
+
+/// Convert an audio sample from the selected board's codec wire format to
+/// f32 (`-1.0..1.0`).
+#[inline(always)]
+pub fn sample_to_f32(y: u32) -> f32 {
+    // Sign-extend the SAMPLE_WIDTH_BITS-wide sample to i32 before normalizing.
+    const SHIFT: u32 = 32 - SAMPLE_WIDTH_BITS;
+    (((y << SHIFT) as i32) >> SHIFT) as f32 / SAMPLE_SCALE
+}
+
 // - static data --------------------------------------------------------------
 
 //DMA buffer must be in special region. Refer https://embassy.dev/book/#_stm32_bdma_only_working_out_of_some_ram_regions

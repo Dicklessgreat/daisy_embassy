@@ -4,7 +4,7 @@
 use core::cell::RefCell;
 use core::sync::atomic::{AtomicUsize, Ordering};
 
-use daisy_embassy::audio::{Idle, Interface};
+use daisy_embassy::audio::{Idle, Interface, SAMPLE_WIDTH_BITS as CODEC_SAMPLE_WIDTH_BITS};
 use daisy_embassy::led::UserLed;
 use defmt::{panic, *};
 use embassy_executor::Spawner;
@@ -159,7 +159,8 @@ async fn audio_receiver_task(
                         led.on();
                         Default::default()
                     });
-                    *os = (sample >> 8) as u32;
+                    // Scale the 32-bit USB sample down to the codec's sample width.
+                    *os = (sample >> (32 - CODEC_SAMPLE_WIDTH_BITS)) as u32;
                 }
             })
             .await;

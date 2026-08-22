@@ -3,6 +3,12 @@ use defmt::info;
 use embassy_stm32::{self as hal, Peri, peripherals, sai};
 use hal::peripherals::*;
 
+/// Number of significant bits in each 32-bit SAI word.
+///
+/// The PCM3060 transport is configured for 24-bit samples
+/// (`sai::DataSize::Data24` below), so only the low 24 bits of each word are used.
+pub const SAMPLE_WIDTH_BITS: u32 = 24;
+
 /// Codec and Pins for the PCM3060 audio codec configured by hardware (not using i2c)
 pub struct Codec<'a> {
     sai_tx: sai::Sai<'a, peripherals::SAI1, u32>,
